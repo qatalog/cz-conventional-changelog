@@ -1,12 +1,47 @@
 'format cjs';
 
 var engine = require('./engine');
-var conventionalCommitTypes = require('conventional-commit-types');
 var configLoader = require('commitizen').configLoader;
+
+// Modified from `require('conventional-commit-types')`
+const COMMIT_TYPES = {
+  break: {
+    description: "A breaking change for downstream consumers",
+    title: "Breaking changes",
+  },
+  perf: {
+    description: "A performance improvement",
+    title: "Performance improvements",
+  },
+  revert: {
+    description: "Reverts a previous change",
+    title: "Reverted changes",
+  },
+  fix: {
+    description: "A bug fix",
+    title: "Fixes",
+  },
+  feat: {
+    description: "A new feature",
+    title: "Features",
+  },
+  refactor: {
+    description: "A refactoring, which fixes no bugs and adds no features",
+    title: "Refactorings",
+  },
+  format: {
+    description: "Trivial formatting changes, like indentation, semi-colons and automated linter fixes",
+    title: "Formatting changes",
+  },
+  chore: {
+    description: "Housekeeping, anything else",
+    title: "Chores",
+  },
+};
 
 var config = configLoader.load();
 var options = {
-  types: conventionalCommitTypes.types,
+  types: COMMIT_TYPES,
   defaultType: process.env.CZ_TYPE || config.defaultType,
   defaultScope: process.env.CZ_SCOPE || config.defaultScope,
   defaultSubject: process.env.CZ_SUBJECT || config.defaultSubject,
